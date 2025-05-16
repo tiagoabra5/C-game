@@ -1,6 +1,7 @@
 #include "scores.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -13,16 +14,53 @@ void initDataDirectory() {
     #else
     mkdir("data", 0777);
     #endif
-    
-    FILE* file = fopen(SCORES_FILE, "a");
-    if (file) fclose(file);
 }
 
 void saveScore(const char* name, int score, int level) {
     initDataDirectory();
-    FILE* file = fopen(SCORES_FILE, "a");
+    
+    PlayerScore scores[MAX_SCORES + 1]; 
+    int count = 0;
+    
+    FILE* file = fopen(SCORES_FILE, "r");
     if (file) {
-        fprintf(file, "%s %d %d\n", name, score, level);
+        while (count < MAX_SCORES && fscanf(file, "%49s %d %d", 
+              scores[count].name, 
+              &scores[count].score, 
+              &scores[count].level) == 3) {
+            count++;
+        }
+        fclose(file);
+    }
+    
+    strncpy(scores[count].name, name, MAX_NAME_LENGTH);
+    scores[count].name[MAX_NAME_LENGTH-1] = '\0';
+    scores[count].score = score;
+    scores[count].level = level;
+    count++;
+    
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (scores[j].score < scores[j+1].score) {
+                PlayerScore temp = scores[j];
+                scores[j] = scores[j+1];
+                scores[j+1] = temp;
+            }
+        }
+    }
+    
+    if (count > MAX_SCORES) {
+        count = MAX_SCORES;
+    }
+    
+    file = fopen(SCORES_FILE, "w");
+    if (file) {
+        for (int i = 0; i < count; i++) {
+            fprintf(file, "%s %d %d\n", 
+                   scores[i].name, 
+                   scores[i].score, 
+                   scores[i].level);
+        }
         fclose(file);
     }
 }
@@ -34,20 +72,12 @@ void showTopScores() {
     FILE* file = fopen(SCORES_FILE, "r");
     if (file) {
         while (count < MAX_SCORES && fscanf(file, "%49s %d %d", 
-              scores[count].name, &scores[count].score, &scores[count].level) == 3) {
+              scores[count].name, 
+              &scores[count].score, 
+              &scores[count].level) == 3) {
             count++;
         }
         fclose(file);
-    }
-    
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = 0; j < count - i - 1; j++) {
-            if (scores[j].score < scores[j+1].score) {
-                PlayerScore temp = scores[j];
-                scores[j] = scores[j+1];
-                scores[j+1] = temp;
-            }
-        }
     }
     
     screenClear();
@@ -60,9 +90,14 @@ void showTopScores() {
     printf("╚══════════════════════════╝");
     
     screenSetColor(WHITE, BLACK);
-    for (int i = 0; i < count && i < MAX_SCORES; i++) {
+    for (int i = 0; i < count; i++) {
         screenGotoxy(MAXX/2 - 12, MINY + 5 + i);
         printf("║ %2d. %-15s %6d ║", i+1, scores[i].name, scores[i].score);
+    }
+    
+    for (int i = count; i < MAX_SCORES; i++) {
+        screenGotoxy(MAXX/2 - 12, MINY + 5 + i);
+        printf("║ %2d. %-15s %6s ║", i+1, "", "");
     }
     
     screenGotoxy(MAXX/2 - 12, MINY + 11);
