@@ -3,9 +3,14 @@ Jogo desenvolvido em C para a disciplina de Programação Imperativa e Funciona 
 
 ## 🌌 Sky Collector
 O sky collector é um jogo de ação e estratégia em terminal. O objetivo é coletar itens bons(+) e evitar os ruins (X). Você controla um personagem (@) na horizontal. A cada nivel que você passa, a dificuldade aumenta.
-- Pressione "A": para se movimentar para a esquerda
-- Pressione "D": para se movimentar para a direita
-- Pressione "Q": para sair do jogo
+
+### Controles
+
+| Tecla | Ação         |
+|-------|--------------|
+| A     | Esquerda     |
+| D     | Direita      |
+| Q     | Sair do jogo |
 
 ## 🎮 Como jogar
 ### Requerimento para rodar o jogo
