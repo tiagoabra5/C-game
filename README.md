@@ -20,7 +20,7 @@ O sky collector é um jogo de ação e estratégia em terminal. O objetivo é co
 - É necessario ter o GCC Instalado.
 
 ### Como rodar no seu Computador: 
-Para rodar o jogo na sua maquina, basta mudar para o diretório raiz da biblioteca e digitar o seguinte comando:
+Para rodar o jogo na sua maquina, basta mudar para o diretório raiz da biblioteca e digitar o seguinte comando no terminal:
 ```
 $ gcc ./src/*.c -I./include -o ./build/sky-collector
 ```
