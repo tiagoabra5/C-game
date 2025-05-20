@@ -2,7 +2,10 @@
 Jogo desenvolvido em C para a disciplina de Programação Imperativa e Funciona utilizando a biblioteca CLI.lib
 
 ## 🌌 Sky Collector
-Nosso jogo é um desafio de reflexos e agilidade. O jogador controla um personagem representado pelo símbolo '@', posicionado na base da tela. Do topo, caem objetos bons (+) e ruins (X). O objetivo é desviar dos objetos ruins e coletar os bons, movimentando o personagem lateralmente. À medida que o tempo passa, o jogo se torna mais difícil: a velocidade dos objetos aumenta e a frequência de objetos ruins cresce, exigindo cada vez mais atenção e precisão do jogador. O jogo oferece uma experiência simples, viciante e progressivamente desafiadora.
+O sky collector é um jogo de ação e estratégia em terminal. O objetivo é coletar itens bons(+) e evitar os ruins (X). Você controla um personagem (@) na horizontal. A cada nivel que você passa, a dificuldade aumenta.
+- Pressione "A": para se movimentar para a esquerda
+- Pressione "D": para se movimentar para a direita
+- Pressione "Q": para sair do jogo
 
 ## 🎮 Como jogar
 ### Requerimento para rodar o jogo
